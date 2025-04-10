@@ -1,1 +1,54 @@
-<!-- QR Code Generator Template -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QR Code Generator</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+  <div class="max-w-4xl mx-auto px-4 py-10">
+    <a href="../index.html" class="text-blue-500 hover:underline mb-4 inline-block">← Back to Home</a>
+    <h1 class="text-2xl font-bold mb-4">📷 QR Code Generator</h1>
+    <p class="mb-6">Paste a URL or message below to generate a custom QR code.</p>
+
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <label for="qr-input" class="block mb-2 font-medium">Text or URL</label>
+      <input type="text" id="qr-input" class="w-full p-2 border border-gray-300 rounded mb-4" placeholder="https://example.com" />
+
+      <button id="generate-btn" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Generate QR</button>
+
+      <div id="qr-result" class="mt-6 text-center hidden">
+        <canvas id="qr-canvas" class="mx-auto mb-4"></canvas>
+        <button id="download-btn" class="text-blue-600 hover:underline">Download QR Code</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const input = document.getElementById('qr-input');
+    const canvas = document.getElementById('qr-canvas');
+    const result = document.getElementById('qr-result');
+    const generateBtn = document.getElementById('generate-btn');
+    const downloadBtn = document.getElementById('download-btn');
+
+    generateBtn.addEventListener('click', () => {
+      const value = input.value.trim();
+      if (!value) return alert('Please enter some text or a URL');
+
+      QRCode.toCanvas(canvas, value, { width: 200 }, (err) => {
+        if (err) console.error(err);
+        result.classList.remove('hidden');
+      });
+    });
+
+    downloadBtn.addEventListener('click', () => {
+      const link = document.createElement('a');
+      link.download = 'qr-code.png';
+      link.href = canvas.toDataURL();
+      link.click();
+    });
+  </script>
+</body>
+</html>

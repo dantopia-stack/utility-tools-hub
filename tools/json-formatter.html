@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON Formatter</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-800">
+  <div class="max-w-4xl mx-auto px-4 py-10">
+    <a href="../index.html" class="text-blue-500 hover:underline mb-4 inline-block">← Back to Home</a>
+    <h1 class="text-2xl font-bold mb-4">📦 JSON Formatter</h1>
+    <p class="mb-6">Paste raw JSON to format and pretty-print it.</p>
+
+    <textarea id="json-input" class="w-full h-48 p-3 border border-gray-300 rounded mb-4" placeholder='{"name": "John", "age": 30}'></textarea>
+    <button id="format-btn" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Format JSON</button>
+    <pre id="output" class="whitespace-pre-wrap bg-white mt-4 p-4 rounded shadow text-sm overflow-auto"></pre>
+  </div>
+
+  <script>
+    const input = document.getElementById('json-input');
+    const output = document.getElementById('output');
+    const button = document.getElementById('format-btn');
+
+    button.addEventListener('click', () => {
+      try {
+        const formatted = JSON.stringify(JSON.parse(input.value), null, 2);
+        output.textContent = formatted;
+      } catch (e) {
+        output.textContent = '❌ Invalid JSON';
+      }
+    });
+  </script>
+</body>
+</html>
